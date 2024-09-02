@@ -33,3 +33,12 @@ def decode(lst):
 
 ## Давайте посмотрим, как это можно сделать с помощью Hypothesis:
 
+
+
+from hypothesis import given
+from hypothesis.strategies import text
+
+@given(text())
+def test_decode_inverts_encode(s):
+    assert decode(encode(s)) == s
+    
