@@ -24,6 +24,23 @@ def decode(lst):
           q += character * count
     return q
 
+## Мы хотим написать тест для этой пары функций, который проверит некоторый инвариант из их должностных обязанностей.
+
+
+## Инвариант, когда у вас есть такого рода encoding/decoding заключается в том, что если вы кодируете что-то, а затем декодируете это, то получаете то же самое значение назад.
+
+
+## Давайте посмотрим, как это можно сделать с помощью Hypothesis:
+
+
+from hypothesis import given
+from hypothesis.strategies import text, characters
+
+@given(text(alphabet=characters(whitelist_categories=('Ll', 'Lu', 'Nd')), min_size=1))
+def test_decode_inverts_encode(s):
+    assert decode(encode(s)) == s
+
+
 
 ## Мы хотим написать тест для этой пары функций, который проверит некоторый инвариант из их должностных обязанностей.
 
@@ -35,10 +52,6 @@ def decode(lst):
 
 
 
-from hypothesis import given
-from hypothesis.strategies import text
 
-@given(text())
-def test_decode_inverts_encode(s):
-    assert decode(encode(s)) == s
+
     
